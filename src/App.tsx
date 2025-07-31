@@ -1,12 +1,16 @@
-import React from 'react';
+import { BrowserRouter, Routes, Route } from 'react-router';
 import Home from '../src/pages/Home'
-import PokemonList from '../src/hooks/usePokemonList'; // 경로 확인 필요
+import DetailPage from '../src/pages/DetailPage';
 
 function App() {
   return (
     <div>
-      <Home />
-      <PokemonList />
+      <BrowserRouter>
+        <Routes>
+          <Route path='/' element={<Home />} />
+          <Route path='/detail' element={<DetailPage />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }

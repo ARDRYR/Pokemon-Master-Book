@@ -22,15 +22,11 @@ const fetchGeneration = async ():Promise<GenerationOption[]> => {
   }));
 };
 
-const GenerationSelect = () => {
+const GenerationSelect = (onChange) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["generation-list"],
     queryFn: fetchGeneration,
   });
-
-  const handleChange = (selected: GenerationOption | null) => {
-    console.log("선택한 세대:", selected?.value);
-  };
 
   if (isLoading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생!</p>;
@@ -39,7 +35,7 @@ const GenerationSelect = () => {
     <div style={{ width: 300 }}>
       <Select
         options={data}            // API에서 가져온 리스트
-        onChange={handleChange}   // 선택했을 때 실행할 함수
+        onChange={onChange}   // 선택했을 때 실행할 함수
         placeholder="세대 선택"  // 입력 전 기본 텍스트
         isClearable               // x 버튼으로 초기화 가능
       />

@@ -22,16 +22,17 @@ const fetchAbilities = async ():Promise<AbilityOption[]> => {
   }));
 };
 
-const AbilitiesSelect = () => {
+const AbilitiesSelect = (onChange) => {
   const { data, isLoading, error } = useQuery({
     queryKey: ["pokemon-list"],
     queryFn: fetchAbilities,
   });
 
+  /*
   const handleChange = (selected: AbilityOption | null) => {
     console.log("선택한 특성:", selected?.value);
   };
-
+*/
   if (isLoading) return <p>로딩 중...</p>;
   if (error) return <p>에러 발생!</p>;
 
@@ -39,7 +40,7 @@ const AbilitiesSelect = () => {
     <div style={{ width: 300 }}>
       <Select
         options={data}            // API에서 가져온 리스트
-        onChange={handleChange}   // 선택했을 때 실행할 함수
+        onChange={onChange}   // 선택했을 때 실행할 함수
         placeholder="특성 선택"  // 입력 전 기본 텍스트
         isClearable               // x 버튼으로 초기화 가능
       />

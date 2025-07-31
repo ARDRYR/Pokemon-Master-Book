@@ -1,25 +1,24 @@
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
+export interface PokemonList{
+  name: string;
+  url: string;
+}
+
+interface PokemonListResponse{
+  count: number;
+  next: string;
+  previous: string;
+  results: PokemonList[];
+}
+
 export default function usePokemonList() {
-  const { data, isLoading, error } = useQuery({
+  return useQuery<PokemonListResponse>({
     queryKey: ['pokemon'], 
-    queryFn: () => 
-      axios
-        .get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
-        .then(res => res.data),
+    queryFn: async () => {
+      const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+      return res.data;
+    }
   });
-
-  console.log(data);
-
-  if (isLoading) return <p> 로딩 중...</p>;
-  if (error) return <p> 에러 발생! </p>;
-
-  return (
-    <ul>
-      {data.results.map((pokemon: any, index: number) => (
-        <li key={index}>{pokemon.name}</li>
-      ))}
-    </ul>
-  );
 }
