@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Home from '../src/pages/Home'
-import DetailPage from '../src/pages/DetailPage';
+import CatchPage from './pages/CatchPage';
+import Card from "../src/components/PokemonCard"
 
 function App() {
   return (
@@ -8,7 +9,8 @@ function App() {
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />
-          <Route path='/detail' element={<DetailPage />} />
+          <Route path='/detail' element={<CatchPage />} />
+          <Route path='/pokemon' element={<Card />} />
         </Routes>
       </BrowserRouter>
     </div>
