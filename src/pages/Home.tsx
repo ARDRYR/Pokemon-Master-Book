@@ -53,8 +53,9 @@ export default function home() {
       </div>
       <div className="card-box">
         {keyword.length > 0 && filteredPokemon?.length > 0 ? (
-          filteredPokemon.map((pokemon) => (
-            <PokemonCard key={pokemon.id} name_en={pokemon.name_en} />
+          filteredPokemon.filter((pokemon) => !!pokemon.name_en)
+          .map((pokemon) => (
+            <PokemonCard key={`${pokemon.name_en}-${pokemon.id}`} pokemon={pokemon} />
           ))
         ) : (
           <Card />

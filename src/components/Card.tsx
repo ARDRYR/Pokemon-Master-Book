@@ -78,7 +78,7 @@ export default function Card() {
           fetchNextPage();
         }
       },
-      { threshold: 1 }
+      { threshold: 1, rootMargin: '200px', }
     );
 
     if (loadMoreRef.current) observer.observe(loadMoreRef.current);
