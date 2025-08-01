@@ -29,6 +29,7 @@ header{
   display: flex;
   flex-direction: row;
   align-items: center;
+  justify-content: center;
   padding: 20px;
 }
 
@@ -40,6 +41,7 @@ header{
 
 .search-button{
   margin: 5px;
+  margin-right: 20px;
   background-color: black;
   width: 50px;
   height: 50px;
