@@ -32,26 +32,3 @@ header{
   justify-content: center;
   padding: 20px;
 }
-
-.search-bar{
-  width: 300px;
-  height: 50px;
-  border-radius: 5px;
-}
-
-.search-button{
-  margin: 5px;
-  margin-right: 20px;
-  background-color: black;
-  width: 50px;
-  height: 50px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 5px;
-}
-
-.search-button-image{
-  width: 80%;
-  height: 80%;
-}
