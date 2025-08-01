@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from 'react-router';
 import Home from '../src/pages/Home'
 import CatchPage from './pages/CatchPage';
-import Card from "../src/components/PokemonCard"
+import Card from "./components/Card"
 
 function App() {
   return (

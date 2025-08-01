@@ -1,4 +1,3 @@
-
 import AbilitySelect from "../hooks/useAbilities"
 import type { AbilityOption } from "../hooks/useAbilities";
 import GenerationSelect from "../hooks/useGeneration"
@@ -9,6 +8,9 @@ import { useState } from "react";
 import './pages.css';
 import { useNavigate } from "react-router";
 import PokemonCard from "../components/PokemonCard";
+import SearchBar from "../components/SearchBar";
+import Card from "../components/Card";
+import { useLocalizedPokemonList } from "../hooks/useLocalizedPokemonList";
 
 export default function home() {
   const navigate = useNavigate();
@@ -18,7 +20,10 @@ export default function home() {
   const handleClick = () => {
     navigate('/detail');
   }
+  const [ keyword, setKeyword ] = useState("");
 
+  const { data: allPokemon, isLoading, isError } = useLocalizedPokemonList();
+  const filteredPokemon = allPokemon?.filter((pokemon) => pokemon.name_ko.includes(keyword)) ?? [];
   return (
     <div className="main-container">
       <header>
@@ -27,10 +32,7 @@ export default function home() {
         <button className="header-button" onClick={handleClick}>포켓몬 포획하기</button>
       </header>
       <div className="content-container">
-        <input className="search-bar" type="text" placeholder="이름 또는 도감번호로 검색하세요" />
-        <button className="search-button">
-          <img className="search-button-image" src="https://pokemonkorea.co.kr/img/search.png" />
-        </button>
+        <SearchBar onSearch={setKeyword} />
         <div className="filter-box">
           <span className="abilities-text">특성</span>
           <AbilitySelect 
@@ -50,7 +52,17 @@ export default function home() {
         </div>
       </div>
       <div className="card-box">
-        <PokemonCard />
+        {keyword.length > 0 && filteredPokemon?.length > 0 ? (
+          filteredPokemon.map((pokemon) => (
+            <PokemonCard key={pokemon.id} name_en={pokemon.name_en} />
+          ))
+        ) : (
+          <Card />
+        )}
+
+        {keyword && filteredPokemon.length === 0 && (
+          <p className="text-gray-500">검색 결과가 없습니다.</p>
+        )}        
       </div>
     </div>
   )
