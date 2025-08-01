@@ -1,4 +1,4 @@
-import { useQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 export interface PokemonList{
@@ -14,11 +14,18 @@ interface PokemonListResponse{
 }
 
 export default function usePokemonList() {
-  return useQuery<PokemonListResponse>({
+  return useInfiniteQuery<PokemonListResponse>({
     queryKey: ['pokemon'], 
-    queryFn: async () => {
-      const res = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0');
+    queryFn: async ({pageParam = 0}) => {
+      const res = await axios.get(
+        `https://pokeapi.co/api/v2/pokemon?limit=20&offset=${pageParam}`
+      );
       return res.data;
-    }
+    },
+    getNextPageParam: (lastPage, allPages) => {
+      const nextOffset = allPages.length * 20;
+      return lastPage.next ? nextOffset : undefined;
+    },
+    initialPageParam: 0,
   });
 }
