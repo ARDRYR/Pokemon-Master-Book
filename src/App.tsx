@@ -5,7 +5,7 @@ import Card from "./components/Card"
 
 function App() {
   return (
-    <div>
+    <div className='container'>
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Home />} />

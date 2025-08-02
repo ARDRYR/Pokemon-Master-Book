@@ -4,7 +4,7 @@ import type { PokemonList } from "../hooks/usePokemonList";
 import axios from "axios";
 import "../components/componentsCss.css"
 import { useNavigate } from "react-router";
-import { usePokemonDetail } from "../hooks/usePokemonDetail";
+import { useType } from "../hooks/useType";
 
 interface PokemonDetail{
   name: string;
@@ -20,6 +20,11 @@ export default function Card() {
   const [ loadingDetail, setLoadingDetail ] =  useState(true);
   const navigate = useNavigate();
   const loadMoreRef = useRef<HTMLDivElement>(null);
+  const { data: typeList, isLoading: typeLoading } = useType();
+  const translateType = (type: string) => {
+    const match = typeList?.find(t => t.value === type);
+    return match?.label ?? type;
+  }
   
 
   useEffect(() => {
@@ -85,7 +90,7 @@ export default function Card() {
     return () => observer.disconnect();
   }, [hasNextPage, isFetchingNextPage, fetchNextPage]);
 
-  if(isLoading) return <p>로딩 중...</p>
+  if(isLoading || typeLoading) return <p>로딩 중...</p>
   if(isError) return <p>에러 발생!</p>
 
   
@@ -96,7 +101,7 @@ export default function Card() {
         <img src={pokemon.sprite} alt={pokemon.name} />
         <span>No.{pokemon.id}</span>
         <h3>{pokemon.koreanName}</h3>
-        <p>{pokemon.types.join(" / ")}</p>
+        <p>{pokemon.types.map(t => translateType(t)).join(" / ")}</p>
       </button>
     ))}
     <div ref={loadMoreRef}></div>
