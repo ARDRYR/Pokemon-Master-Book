@@ -52,18 +52,19 @@ export default function home() {
         </div>
       </div>
       <div className="card-box">
-        {keyword.length > 0 && filteredPokemon?.length > 0 ? (
-          filteredPokemon.filter((pokemon) => !!pokemon.name_en)
-          .map((pokemon) => (
-            <PokemonCard key={`${pokemon.name_en}-${pokemon.id}`} pokemon={pokemon} />
-          ))
+        {keyword.length > 0 ? (
+          filteredPokemon?.length > 0 ? (
+            filteredPokemon
+            .filter((pokemon) => !!pokemon.name_en)
+            .map((pokemon) => (
+              <PokemonCard key={`${pokemon.name_en}-${pokemon.id}`} pokemon={pokemon} />
+            ))
+        ) : (
+          <p className="no-result">검색 결과가 없습니다.</p>
+        )
         ) : (
           <Card />
         )}
-
-        {keyword && filteredPokemon.length === 0 && (
-          <p className="text-gray-500">검색 결과가 없습니다.</p>
-        )}        
       </div>
     </div>
   )
